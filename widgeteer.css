@@ -4,10 +4,11 @@
   cursor: pointer;
   height: 64px;
   line-height: 72px;
-  position: absolute;
+  position: fixed;
   right: 15px;
   text-align: center;
   width: 64px;
+  z-index: 9999;
 }
 
 .widgeteer-pulse:before,
@@ -42,4 +43,19 @@
 #widgeteer span {
   font-size: 24px;
   font-weight: bold;
+}
+
+.body-lock {
+  overflow: hidden;
+}
+
+#widget-panel {
+  background-color: rgba(0, 0, 0, 0.85);
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  padding: 5%;
+  position: fixed;
+  right: 0;
+  top: 0;
 }
