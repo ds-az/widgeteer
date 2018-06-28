@@ -1,0 +1,45 @@
+#widgeteer {
+  border-radius: 50%;
+  bottom: 15px;
+  cursor: pointer;
+  height: 64px;
+  line-height: 72px;
+  position: absolute;
+  right: 15px;
+  text-align: center;
+  width: 64px;
+}
+
+.widgeteer-pulse:before,
+.widgeteer-pulse:after {
+    animation: wpulse 1.5s linear infinite;
+    border: 1px solid #FF5733;
+    border-radius: 50%;
+    bottom: -14px;
+    content: '';
+    display: block;
+    left: -14px;
+    opacity: 0;
+    position: absolute;
+    right: -14px;
+    top: -14px;
+}
+
+@keyframes wpulse {
+    0% {
+        transform: scale(0.65);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.0);
+        opacity: 1;
+    }
+}
+
+#widgeteer span {
+  font-size: 24px;
+  font-weight: bold;
+}
