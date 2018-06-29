@@ -49,13 +49,11 @@
     defaults = {
 
       // widget properties
-      widgetAnimate:{
-        animate: true,
-        className: "widgeteer-pulse"
-      },
-      widgetBgColor: "#FFD700",
-      widgetColor:   "#FF5733",
+      widgetAnimate: true,
+      widgetBgColor: "#337ab7",
+      widgetColor:   "#FFFFFF",
       widgetIcon:    "fa-bars",
+      widgetShape:   "none",
 
       // panel properties
       panelBgColor: "rgba(49, 49, 49, 0.8)",
@@ -70,42 +68,98 @@
       plugin.settings = $.extend( true, {}, defaults, options );
 
       // Initialize widget
-      private_initialize_widget({
+      private_initialize_widgeteer(
+      plugin.settings.widgetAnimate
+      ,{
         'background-color': plugin.settings.widgetBgColor,
         'color': plugin.settings.widgetColor,
       }
       , plugin.settings.widgetIcon
-      , plugin.settings.widgetAnimate );
+      , plugin.settings.widgetShape );
 
     };
 
-    /*-----// Private methods //-----*/
-    var private_initialize_widget = function( properties, icon, animation ){
+    /****************************************
+     *********   Private Methods   **********
+     ****************************************/
 
+    // widget
+    var private_initialize_widgeteer = function( animation, properties, icon, shape ){
+      /***** animation *****/
+      if( animation ){
+        switch ( shape ) {
+          case "circle":
+            $( plugin ).addClass( 'widgeteer-pulse-circle' );
+            break;
+
+          case "square":
+            $( plugin ).addClass( 'widgeteer-pulse' );
+            break;
+
+          default:
+            break;
+        }
+      }
+
+      /***** properties *****/
       $( plugin ).css( properties );
+
+      /***** icon *****/
       $( 'span', plugin ).addClass( icon );
 
-      if( animation.animate ){
-          $( plugin ).addClass( animation.className );
-      } else {
-          $( plugin ).removeClass( animation.className );
-      }
-    };
-
-    var private_initialize_panel = function(properties, animated){
-      if($('#widget-panel').length){
-        $('#widget-panel').remove();
-        $('body').removeAttr('class');
-      } else {
-        $('body').append('<div id="widget-panel"></div>');
-        $('body').attr('class','body-lock');
+      /***** shape *****/
+      if(shape === "circle"){
+        $( plugin ).css( 'border-radius', '50%' );
       }
     }
 
-    /*-----// Public methods //-----*/
-    plugin.click( function(){
-      private_initialize_panel();
+    // Panel
+    var private_create_panel = function(properties, animated){
+      if( $('#widget-panel').length ){
+        $( '#widget-panel' ).remove();
+        $( 'body' ).removeAttr( 'class' );
+      } else {
+        $( 'body' ).append( '<div id="widget-panel"></div>' );
+        $( 'body' ).attr( 'class','body-lock' );
+        $( '#widget-panel' ).fadeIn( 350 );
+      }
+    }
+
+
+    // Close button
+    var private_create_close_btn = function(){
+      $( '#widget-panel' ).append( '<div id="widget-close"></div>' );
+      $( '#widget-close' ).append( '<span class="fa fa-close"></span>' );
+
+      $( '#widget-close' ).click( function(){
+
+        $( '#widget-close' ).fadeOut( 'slow' );
+        $( '#widget-close' ).remove();
+        $( '#widget-panel' ).fadeOut( 350 );
+        $( '#widget-panel' ).remove();
+        $( 'body' ).removeAttr( 'class' );
+        plugin.fadeIn('slow');
+      } );
+
+    };
+
+
+
+
+    /****************************************
+     *********    Public Methods    *********
+     ****************************************/
+
+    plugin.click( function( e ){
+      plugin.css('left', (plugin.position().left) + 'px');
+      console.log(plugin.position());
+      plugin.fadeOut('slow');
+
+      private_create_panel();
+      private_create_close_btn();
+
     } );
+
 
     plugin.init();
 
