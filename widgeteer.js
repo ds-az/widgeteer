@@ -34,8 +34,11 @@
  *                                           Added click functionality to      *
  *                                           widgeteer button.                 *
  *                                           Added overlay panel.              *
+ *     v0.0.03    06-28-2019    Al Zuniga    Added Close Button.               *
+ *                                           Added click functionality to      *
+ *                                           close button.                     *
  *                                                                             *
- * Version: 0.0.02
+ * Version: 0.0.03                                                             *
  ******************************************************************************/
 
 (function( $ ){
@@ -49,11 +52,11 @@
     defaults = {
 
       // widget properties
-      widgetAnimate: true,
+      widgetAnimate: false,
       widgetBgColor: "#337ab7",
       widgetColor:   "#FFFFFF",
       widgetIcon:    "fa-bars",
-      widgetShape:   "none",
+      widgetShape:   "square",
 
       // panel properties
       panelBgColor: "rgba(49, 49, 49, 0.8)",
@@ -84,11 +87,14 @@
      ****************************************/
 
     // widget
-    var private_initialize_widgeteer = function( animation, properties, icon, shape ){
+    var private_initialize_widgeteer = function( animation,
+                                                 properties,
+                                                 icon,
+                                                 shape ){
       /***** animation *****/
       if( animation ){
         switch ( shape ) {
-          case "circle":
+          case "round":
             $( plugin ).addClass( 'widgeteer-pulse-circle' );
             break;
 
@@ -108,7 +114,7 @@
       $( 'span', plugin ).addClass( icon );
 
       /***** shape *****/
-      if(shape === "circle"){
+      if(shape === "round"){
         $( plugin ).css( 'border-radius', '50%' );
       }
     }
@@ -142,8 +148,6 @@
       } );
 
     };
-
-
 
 
     /****************************************

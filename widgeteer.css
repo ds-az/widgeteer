@@ -14,7 +14,7 @@
 
 .widgeteer-pulse:before,
 .widgeteer-pulse:after {
-    animation: wpulse 1.5s linear infinite;
+    animation: wpulse 750ms linear infinite;
     /* Edit border color to match widget bgcolor */
     border: 1px solid #2e6da4;
     bottom: -14px;
@@ -90,9 +90,9 @@
 }
 
 #widget-close:hover {
-  -webkit-animation:spin 500ms linear;
-    -moz-animation:spin 500ms linear;
-    animation:spin 500ms linear;
+  -webkit-animation:spin 250ms linear;
+    -moz-animation:spin 250ms linear;
+    animation:spin 250ms linear;
 }
 
 @keyframes wpulse {
