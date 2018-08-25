@@ -69,6 +69,7 @@
   padding: 5%;
   position: fixed;
   right: 0;
+  text-align: center;
   top: 0;
   z-index: 9997;
 }
@@ -93,6 +94,13 @@
   -webkit-animation:spin 250ms linear;
     -moz-animation:spin 250ms linear;
     animation:spin 250ms linear;
+}
+
+#widget-panel .panel-container {
+  margin: 0 auto;
+  max-width: 1140px; /* Adjust to site requirements */
+  text-align: left;
+  color: white;
 }
 
 @keyframes wpulse {

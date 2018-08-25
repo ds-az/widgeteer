@@ -58,6 +58,9 @@
       widgetIcon:    "fa-bars",
       widgetShape:   "square",
 
+      // panel widgets
+      panelWidgets: ['about','hours','map','phone','reviews','social'],
+
       // panel properties
       panelBgColor: "rgba(49, 49, 49, 0.8)",
 
@@ -111,6 +114,7 @@
       $( plugin ).css( properties );
 
       /***** icon *****/
+      $( plugin ).append('<span class="fa"></span>');
       $( 'span', plugin ).addClass( icon );
 
       /***** shape *****/
@@ -126,6 +130,13 @@
         $( 'body' ).removeAttr( 'class' );
       } else {
         $( 'body' ).append( '<div id="widget-panel"></div>' );
+        $('#widget-panel')
+        .append('<div class="panel-container"></div>')
+        .find('.panel-container')
+        .append('<h1 id="title-line"></h1>')
+        .find('#title-line')
+        .append('<img class="img-responsive" src="https://cdn.dealerspike.com/imglib/ds-admin/images/admin-ds-logo.png" />');
+        private_add_widgets();
         $( 'body' ).attr( 'class','body-lock' );
         $( '#widget-panel' ).fadeIn( 350 );
       }
@@ -149,13 +160,21 @@
 
     };
 
+    // Widgets
+    var private_add_widgets = function(){
+      var widgets = plugin.settings.panelWidgets;
+      $('.panel-container').load('widget.tmpl');
+    };
+
 
     /****************************************
      *********    Public Methods    *********
      ****************************************/
 
     plugin.click( function( e ){
-      plugin.css('left', (plugin.position().left) + 'px');
+      var body = document.getElementsByTagName('body')[0];
+      var scrollBarWidth = body.offsetWidth - body.clientWidth;
+      plugin.css('left', (plugin.position().left - scrollBarWidth) + 'px');
       console.log(plugin.position());
       plugin.fadeOut('slow');
 
