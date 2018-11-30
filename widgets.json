@@ -1,0 +1,32 @@
+{
+  "widgets": [
+    {
+      "cta": "Learn More",
+      "icon": "fa-building",
+      "name": "About Us",
+      "url": "/learn-more-about-us--info",
+      "widget": "about"
+    },
+    {
+      "cta": "Visit Us",
+      "icon": "fa-map-marker",
+      "name": "Map & Hours",
+      "url": "/get-directions-and--hours",
+      "widget": "hours"
+    },
+    {
+      "cta": "Call Us",
+      "icon": "fa-phone",
+      "name": "Contact",
+      "url": "tel:8002885917",
+      "widget": "contact"
+    },
+    {
+      "cta": "How We Rate",
+      "icon": "fa-comments",
+      "name": "Reviews",
+      "url": "/vist-customer-xtestimonials",
+      "widget": "reviews"
+    }
+  ]
+}

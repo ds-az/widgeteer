@@ -1,0 +1,17 @@
+{{#widgets}}
+<li id="{{ widget }}">
+    <a href="{{ url }}" class="verticals-list__link">
+    <span class="fa {{ icon }} img-wrapper"></span>
+    <div class="text-wrapper">
+      <h2>
+        {{ name }}
+      </h2>
+      <h3>
+        <span>{{ cta }}</span>
+
+      </h3>
+    </div>
+    <span class="sr-only">Opens in new window</span>
+  </a>
+</li>
+{{/widgets}}

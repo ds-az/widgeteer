@@ -41,11 +41,11 @@
  * Version: 0.0.03                                                             *
  ******************************************************************************/
 
-(function( $ ){
+(function ($) {
 
-  $.fn.widgeteer = function( options, callback ){
+  $.fn.widgeteer = function (options, callback) {
 
-    var plugin = $( this );
+    var plugin = $(this);
     plugin.settings = {};
 
     // Default Settings
@@ -54,34 +54,34 @@
       // widget properties
       widgetAnimate: false,
       widgetBgColor: "#337ab7",
-      widgetColor:   "#FFFFFF",
-      widgetIcon:    "fa-bars",
-      widgetShape:   "square",
+      widgetColor: "#FFFFFF",
+      widgetIcon: "fa-bars",
+      widgetShape: "square",
 
       // panel widgets
-      panelWidgets: ['about','hours','map','phone','reviews','social'],
+      panelWidgets: ['about', 'hours', 'map', 'phone', 'reviews', 'social'],
 
       // panel properties
       panelBgColor: "rgba(49, 49, 49, 0.8)",
 
       // event callbacks
-      click: function(){}
+      click: function () { }
     }
 
 
-    plugin.init = function(){
+    plugin.init = function () {
       // Settings
-      plugin.settings = $.extend( true, {}, defaults, options );
+      plugin.settings = $.extend(true, {}, defaults, options);
 
       // Initialize widget
       private_initialize_widgeteer(
-      plugin.settings.widgetAnimate
-      ,{
-        'background-color': plugin.settings.widgetBgColor,
-        'color': plugin.settings.widgetColor,
-      }
-      , plugin.settings.widgetIcon
-      , plugin.settings.widgetShape );
+        plugin.settings.widgetAnimate
+        , {
+          'background-color': plugin.settings.widgetBgColor,
+          'color': plugin.settings.widgetColor,
+        }
+        , plugin.settings.widgetIcon
+        , plugin.settings.widgetShape);
 
     };
 
@@ -90,19 +90,19 @@
      ****************************************/
 
     // widget
-    var private_initialize_widgeteer = function( animation,
-                                                 properties,
-                                                 icon,
-                                                 shape ){
+    var private_initialize_widgeteer = function (animation,
+      properties,
+      icon,
+      shape) {
       /***** animation *****/
-      if( animation ){
-        switch ( shape ) {
+      if (animation) {
+        switch (shape) {
           case "round":
-            $( plugin ).addClass( 'widgeteer-pulse-circle' );
+            $(plugin).addClass('widgeteer-pulse-circle');
             break;
 
           case "square":
-            $( plugin ).addClass( 'widgeteer-pulse' );
+            $(plugin).addClass('widgeteer-pulse');
             break;
 
           default:
@@ -111,59 +111,69 @@
       }
 
       /***** properties *****/
-      $( plugin ).css( properties );
+      $(plugin).css(properties);
 
       /***** icon *****/
-      $( plugin ).append('<span class="fa"></span>');
-      $( 'span', plugin ).addClass( icon );
+      $(plugin).append('<span class="fa"></span>');
+      $('span', plugin).addClass(icon);
 
       /***** shape *****/
-      if(shape === "round"){
-        $( plugin ).css( 'border-radius', '50%' );
+      if (shape === "round") {
+        $(plugin).css('border-radius', '50%');
       }
     }
 
     // Panel
-    var private_create_panel = function(properties, animated){
-      if( $('#widget-panel').length ){
-        $( '#widget-panel' ).remove();
-        $( 'body' ).removeAttr( 'class' );
+    var private_create_panel = function (properties, animated) {
+      if ($('#widget-panel').length) {
+        $('#widget-panel').remove();
+        $('body').removeAttr('class');
       } else {
-        $( 'body' ).append( '<div id="widget-panel"></div>' );
+        $('body').append('<div id="widget-panel"></div>');
         $('#widget-panel')
-        .append('<div class="panel-container"></div>')
-        .find('.panel-container')
-        .append('<h1 id="title-line"></h1>')
-        .find('#title-line')
-        .append('<img class="img-responsive" src="https://cdn.dealerspike.com/imglib/ds-admin/images/admin-ds-logo.png" />');
+          .append('<div class="panel-container"></div>')
+          .find('.panel-container')
+          .append('<h1 id="title-line"></h1>')
+          .append('<ul id="widgets" class="verticals-list"></ul>')
+          .find('#title-line')
+          .append('<img class="img-responsive" src="https://cdn.dealerspike.com/imglib/ds-admin/images/admin-ds-logo.png" />');
         private_add_widgets();
-        $( 'body' ).attr( 'class','body-lock' );
-        $( '#widget-panel' ).fadeIn( 350 );
+        $('body').attr('class', 'body-lock');
+        $('#widget-panel').fadeIn(350);
       }
     }
 
 
     // Close button
-    var private_create_close_btn = function(){
-      $( '#widget-panel' ).append( '<div id="widget-close"></div>' );
-      $( '#widget-close' ).append( '<span class="fa fa-close"></span>' );
+    var private_create_close_btn = function () {
+      $('#widget-panel').append('<div id="widget-close"></div>');
+      $('#widget-close').append('<span class="fa fa-close"></span>');
 
-      $( '#widget-close' ).click( function(){
+      $('#widget-close').click(function () {
 
-        $( '#widget-close' ).fadeOut( 'slow' );
-        $( '#widget-close' ).remove();
-        $( '#widget-panel' ).fadeOut( 350 );
-        $( '#widget-panel' ).remove();
-        $( 'body' ).removeAttr( 'class' );
+        $('#widget-close').fadeOut('slow');
+        $('#widget-close').remove();
+        $('#widget-panel').fadeOut(350);
+        $('#widget-panel').remove();
+        $('body').removeAttr('class');
         plugin.fadeIn('slow');
-      } );
+      });
 
     };
 
     // Widgets
-    var private_add_widgets = function(){
-      var widgets = plugin.settings.panelWidgets;
-      $('.panel-container').load('widget.tmpl');
+    
+    var private_add_widgets = function () {
+      $.when($.ajax({url:"./widget.mst", dataType: 'text'}), $.ajax({url:"./widgets.json"}))
+      .done(function(template, data){
+        Mustache.parse(template[0]);
+        var rendered = Mustache.render(template[0], {widgets: data[0].widgets});
+        $('#widgets').html(rendered);
+      })
+      .fail(function(){
+        console.log('There was an error.');
+      });
+
     };
 
 
@@ -171,7 +181,7 @@
      *********    Public Methods    *********
      ****************************************/
 
-    plugin.click( function( e ){
+    plugin.click(function (e) {
       var body = document.getElementsByTagName('body')[0];
       var scrollBarWidth = body.offsetWidth - body.clientWidth;
       plugin.css('left', (plugin.position().left - scrollBarWidth) + 'px');
@@ -181,17 +191,17 @@
       private_create_panel();
       private_create_close_btn();
 
-    } );
+    });
 
 
     plugin.init();
 
-    return plugin.each( function(){
+    return plugin.each(function () {
 
       // Callback
-      if ( $.isFunction( callback ) ) {
-        callback( this );
+      if ($.isFunction(callback)) {
+        callback(this);
       }
-    } );
+    });
   };
-} )( jQuery );
+})(jQuery);
