@@ -27,6 +27,13 @@
       "name": "Reviews",
       "url": "/vist-customer-xtestimonials",
       "widget": "reviews"
+    },
+    {
+      "cta": "Like Us",
+      "icon": "fa-facebook",
+      "name": "Facebook",
+      "url": "https://www.facebook.com/profile.php?id=100003244900147",
+      "widget": "facebook"
     }
   ]
 }

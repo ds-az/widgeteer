@@ -162,9 +162,9 @@
     };
 
     // Widgets
-    
+
     var private_add_widgets = function () {
-      $.when($.ajax({url:"./widget.mst", dataType: 'text'}), $.ajax({url:"./widgets.json"}))
+      $.when($.ajax({url:"./widget.html?v=1.01", dataType: 'text'}), $.ajax({url:"./widgets.json?v=1.02"}))
       .done(function(template, data){
         Mustache.parse(template[0]);
         var rendered = Mustache.render(template[0], {widgets: data[0].widgets});
